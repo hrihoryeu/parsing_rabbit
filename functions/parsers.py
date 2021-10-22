@@ -35,8 +35,6 @@ class WBParser(AbstractParser):
         for card in cards:
             link = 'https://by.wildberries.ru' + card.get('href')
             response = requests.get(link)
-            if response.status_code != 200:
-                continue
             soup = BeautifulSoup(response.text, 'html.parser')
             name = str(soup.find('h1', {'class': 'same-part-kt__header'}))[142:]
             name = name[:name.find('<')]

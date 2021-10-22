@@ -18,11 +18,10 @@ channel.queue_declare(queue='hello')
 
 
 def callback(ch, method, properties, body):
-    nike_dict = JSONSerialization.deserialize(body)
+    values_tuple = tuple(JSONSerialization.deserialize(body))
     print(' [x] Received %r' % body.decode())
-    insert_with_param = "INSERT INTO nike_sneakers VALUES ('', ?, ?, '', '')"
-    data_tuple = (nike_dict['name'], nike_dict['price'])
-    connection_bd.execute(insert_with_param, data_tuple)
+    insert_with_param = "INSERT INTO nike_sneakers VALUES (?, ?, ?, '', ?)"
+    connection_bd.execute(insert_with_param, values_tuple)
     connection_bd.commit()
     print(' [x] Done')
 
